@@ -216,7 +216,7 @@ The Vite dev server automatically proxies `/api` and `/uploads` requests to the 
 
 ### Option B: Unified Single-Port Mode
 
-FastAPI can directly serve the compiled React SPA:
+FastAPI directly serves the compiled React SPA:
 
 ```powershell
 # 1. Build the frontend
@@ -226,11 +226,38 @@ npm.cmd run build
 # 2. Start the backend
 cd C:\Users\sharl\Downloads\sourcescan\sourcescan\backend
 .\.venv\Scripts\activate
-uvicorn app.main:app --port 8000
+uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 Open your browser to: **`http://127.0.0.1:8000`**  
-Both the React web app and the FastAPI REST endpoints will be served from port 8000.
+Both the React web app and the FastAPI REST endpoints are served from a single unified port.
+
+### Option C: Production & Cloud Deployment
+
+#### 1. Public Live Deployment
+The application is deployed publicly via Cloudflare Tunnel and can be accessed at:
+- **Live Public URL:** `https://forum-lake-penn-boxed.trycloudflare.com`
+
+#### 2. Deploying via Docker (Any Cloud Host: Render, Fly.io, Railway, DigitalOcean)
+SourceScan includes a production multi-stage `Dockerfile`:
+```bash
+# Build unified container
+docker build -t sourcescan .
+
+# Run container with persistent storage
+docker run -d -p 8000:8000 -v sourcescan_data:/data sourcescan
+```
+
+#### 3. 1-Click Cloud Deployment via Render.com
+SourceScan includes `render.yaml` for Render Blueprint deployment:
+1. Connect the GitHub repository: `https://github.com/Sharly2006/sourcescan`
+2. Create a new **Web Service** or **Blueprint** on Render.
+3. Render automatically runs the multi-stage Docker build, installs Python & Node dependencies, and provides an HTTPS URL.
+
+#### 4. Data & Upload Persistence
+- **SQLite Database:** Configured via `DB_PATH` (defaults to `sourcescan.db`, can be mounted to a persistent disk volume like `/data/sourcescan.db`).
+- **Image Storage:** Stored in `UPLOAD_DIR` (defaults to `uploads`, can be mounted to `/data/uploads`).
+- **Stateless Cloud Environments:** On platforms without persistent disks (e.g., standard free tiers), new inspections are stored in memory/container storage during the instance lifetime. For production environments, attach a persistent volume to preserve historical records across deployments.
 
 ---
 
