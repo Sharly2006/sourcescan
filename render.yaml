@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: sourcescan
+    runtime: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    region: oregon
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: ALLOWED_ORIGINS
+        value: "*"
+      - key: ENABLE_YOLO_WORLD
+        value: "true"
+      - key: MODEL_PATH
+        value: "yolov8s-world.pt"
+      - key: DB_PATH
+        value: "sourcescan.db"
+      - key: UPLOAD_DIR
+        value: "uploads"
+    autoDeploy: true

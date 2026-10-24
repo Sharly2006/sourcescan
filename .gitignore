@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+.venv/
+.venv_old/
+env/
+venv/
+ENV/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node & Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+*.log
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+
+# Databases
+*.db
+*.db.bak
+*.db-journal
+test.db
+
+# Model weights & binaries (>100MB)
+*.pt
+*.onnx
+backend/weights/
+backend/yolov8s-world.pt
+backend/yolo11n.pt
+
+# Uploads (preserve folder structure via .gitkeep)
+backend/uploads/*.jpg
+backend/uploads/*.jpeg
+backend/uploads/*.png
+!backend/uploads/.gitkeep
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
